@@ -1,0 +1,221 @@
+// import React from "react";
+// // import { Link } from "react-router-dom";
+// import { useHistory } from "react";
+
+// function SecondPage() {
+//   const [name, setName] = useState("");
+//   const [add, setAdd] = useState("Add");
+
+//   function onChangeHandler(e) {
+//     var newname = e.target.value;
+//     setName(newname);
+//   }
+
+//   function onClickHandler(buttonName) {
+//     setAdd(buttonName);
+//   }
+
+//   history.push("/home");
+
+//   return (
+//     <div>
+//       <div>
+//         <div>{/* <Link to="/">Previous</Link> */}</div>
+//         <label htmlFor="inputName">Name:</label>
+//         <input
+//           id="inputname"
+//           name="Name"
+//           type="text"
+//           placeholder="Enter your Name"
+//           value={name}
+//           onChange={(e) => onChangeHandler(e)}
+//         />
+//       </div>
+//       <textarea col={100} row={50} value={name} />
+//       <button onClick={() => onClickHandler("Save")}>{add}</button>
+//     </div>
+//   );
+// }
+
+// export default SecondPage;
+
+
+
+
+
+
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { useReducer } from "react";
+
+
+
+const SecondPage = () => {
+  const navigate = useNavigate();
+
+  const [buttonName, setbuttonName] = useState("Add");
+  const onClickHandler = () => {
+    if (buttonName === "Add") {
+      setbuttonName("Save");
+    } else if (buttonName === "Save") {
+      setbuttonName("Add");
+    }
+  };
+
+  const redirect = () => {
+    navigate("/");
+  };
+
+  return (
+    <div>
+      <h1> Second Page</h1>
+      <button onClick={redirect}>Previous</button>
+      <p></p>
+      <button onClick={onClickHandler}>{buttonName}</button>
+    </div>
+  );
+};
+export default SecondPage;
+
+// class FirstPage extends React.Component {
+//   render() {
+//     return (
+//       <div>
+//         <h1>Home Page</h1>
+//         {/* <Link to="/SecondPage">Next</Link> */}
+//       </div>
+//     );
+//   }
+// }
+            id="inputEmail"
+            email="email"
+            type="text"
+            placeholder="Enter your Email"
+            onChange={(e) =>
+              dispatch({ type: "INPUT_EMAIL", email: e.target.value })
+            }
+          />
+        </div>
+        <p></p>
+
+        <div>
+          <label htmlFor="inputPassword">Password: </label>
+          <input
+            id="inputPassword"
+            password="password"
+            type="text"
+            placeholder="Enter your Password"
+            onChange={(e) =>
+              dispatch({ type: "INPUT_PASSWORD", password: e.target.value })
+            }
+          />
+        </div>
+        <p></p>
+        <div>
+          <button onClick={(e) => this.handleClick()}> SUBMIT</button>
+        </div>
+      </div>
+    </form>
+  );
+};
+export default SecondPage;
+
+
+
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { useReducer } from "react";
+
+const defaultState = {
+  name: "",
+  buttonName: "Add",
+};
+
+const reducer = (state, action) => {
+  console.log(state, action);
+  switch (action.type) {
+    case "INPUT_NAME":
+      // action.payload --> When you are handling a request, say onclick of an element we need to update the state
+      return { ...state, name: action.name };
+    case "INPUT_EMAIL":
+      return { ...state, email: action.email };
+    case "INPUT_PASSWORD":
+      return { ...state, password: action.password };
+    case "ADD":
+      return { ...state, buttonName: "Add" };
+    case "SAVE":
+      return { ...state, buttonName: "Save" };
+    default:
+      return "";
+  }
+};
+
+constSecondPage = () => {
+  const navigate = useNavigate();
+  const [state, dispatch] = useReducer(reducer, defaultState);
+  //const [name, setName] = useState("");
+  //const [buttonName, setbuttonName] = useState("Add");
+
+  const onClickHandler = (e) => {
+    if (state.buttonName === "Add") {
+      dispatch({ type: "SAVE" });
+    } else if (state.buttonName === "Save") {
+      dispatch({ type: "ADD" });
+    }
+  };
+
+  const redirect = () => {
+    navigate("/");
+  };
+
+  return (
+    <div>
+      <h1> Second Page</h1>
+      <button onClick={redirect}>Previous</button>
+      <p></p>
+      <div>
+        <label htmlFor="inputName">Name:</label>
+        <input
+          id="inputName"
+          value={name}
+          type="text"
+          placeholder="Enter your Name"
+          onChange={(e) =>
+            dispatch({ type: "INPUT_NAME", name: e.target.value })
+          }
+        />
+      </div>
+      <div>
+        <input
+          id="inputEmail"
+          value={email}
+          type="text"
+          placeholder="Enter your Email"
+          onChange={(e) =>
+            dispatch({ type: "INPUT_EMAIL", email: e.target.value })
+          }
+        />
+      </div>
+      <p></p>
+      <div>
+        <input
+          id="inputPassword"
+          value={password}
+          type="text"
+          placeholder="Enter your Email"
+          onChange={(e) =>
+            dispatch({ type: "INPUT_PASSWORD", password: e.target.value })
+          }
+        />
+      </div>
+
+      <textarea col={100} row={50} disabled={true} value={state.name} />
+      <p></p>
+      <div>
+        <button onClick={onClickHandler}>{state.buttonName}</button>
+        <button onClick={(e) => this.handleClick()}>SUBMIT</button>
+      </div>
+    </div>
+  );
+};
+export default SecondPage;

@@ -1,14 +1,18 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-class FirstPage extends React.Component {
-  render() {
-    return (
-      <div>
-        <h1>Home Page</h1>
-        <Link to="/SecondPage">Next</Link>
-      </div>
-    );
-  }
-}
+const FirstPage = () => {
+  const navigate = useNavigate();
+
+  const redirect = () => {
+    navigate("/SecondPage");
+  };
+
+  return (
+    <div>
+      <h1>First Page</h1>
+      <button onClick={redirect}>Next</button>
+    </div>
+  );
+};
 export default FirstPage;
